@@ -1,15 +1,14 @@
-# Reflexión sobre el uso de Custom Hooks
+# Implementación de Custom Hooks en React
 
-## ¿Qué se realizó?
-Se refactorizó una aplicación de React que consumía una API externa. Originalmente, la lógica de `fetch`, `useState` y `useEffect` estaba duplicada en cada componente. Se implementó un patrón de diseño utilizando **Custom Hooks**.
+## Descripción del Trabajo
+Se realizó una refactorización de la aplicación de Posts para optimizar el código y mejorar su mantenibilidad.
 
-## Estructura implementada
-1.  **useFetch:** Un hook genérico que encapsula la petición asíncrona.
-2.  **usePosts:** Un hook específico que consume `useFetch` para traer la lista.
-3.  **usePost:** Un hook que recibe un ID y consume `useFetch` para traer un detalle.
+## Cambios Realizados
+1.  **Abstracción con useFetch:** Se creó un hook genérico para manejar peticiones HTTP, centralizando el manejo de estados de carga (`loading`) y errores (`error`).
+2.  **Segregación de Responsabilidades:**
+    * `usePosts`: Encapsula la lógica para obtener la colección completa.
+    * `usePost`: Encapsula la lógica para obtener un elemento individual por ID.
+3.  **Limpieza de Componentes:** Los componentes visuales (`App.jsx`, `PostDetail.jsx`) ahora solo se encargan de renderizar la UI, delegando la lógica de datos a los hooks.
 
-## Beneficios encontrados
-* **Abstracción:** Los componentes de la vista (UI) ya no saben cómo se obtienen los datos, solo saben que los reciben. Esto separa responsabilidades.
-* **Código Limpio (DRY):** Eliminamos la repetición de los estados `loading` y `error` en cada componente.
-* **Reusabilidad:** Si mañana necesitamos llamar a otra API, podemos reutilizar `useFetch` sin reescribir la lógica de conexión.
-* **Mantenibilidad:** Si la forma de hacer fetch cambia (por ejemplo, si cambiamos a `axios`), solo modificamos un archivo (`useFetch.js`) y toda la app se actualiza.
+## Conclusión
+El uso de Custom Hooks permitió reducir código repetido (DRY) y hace que la aplicación sea más fácil de escalar. Si la API cambia en el futuro, solo necesitamos modificar `useFetch` en un solo lugar.

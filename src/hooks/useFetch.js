@@ -8,11 +8,14 @@ export function useFetch(url) {
   useEffect(() => {
     setLoading(true);
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) throw new Error("Error en la petición");
+        return response.json();
+      })
       .then((data) => setData(data))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, [url]); // Se ejecuta cada vez que la URL cambia
+  }, [url]);
 
   return { data, loading, error };
 }
